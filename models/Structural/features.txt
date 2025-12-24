@@ -1,0 +1,15 @@
+PAAC__Xc1.C
+DPC__CC
+AAC__C
+QSO__Schneider.Xr.C
+QSO__Grantham.Xr.C
+CTDC__normwaalsvolume.G1
+CTDC__polarizability.G3
+QSO__Grantham.Xr.K
+QSO__Grantham.Xd.4
+CTDC__hydrophobicity_ZIMJ680101.G3
+CTDC__hydrophobicity_ARGP820101.G3
+CTDC__charge.G3
+CTDD__hydrophobicity_CASG920101.3.residue50
+PAAC__Xc1.P
+CTDT__hydrophobicity_CASG920101.Tr1221
