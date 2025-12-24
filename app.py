@@ -111,7 +111,7 @@ This tool predicts **functional classes of microproteins** using **sequence-deri
 - **Validation** mode for high confidence (stringent)
 
 **NOTE:**
-**This tool is designed for microproteins with sequence length between {MIN_LEN} and {MAX_LEN} amino acids.** Ensure that the uploaded sequences are within these limits.
+This tool is designed for microproteins with **canonical amino acids** and **sequence length between {MIN_LEN} and {MAX_LEN} amino acids.** Please ensure that uploaded sequences fall within this range.
 """
 )
 
