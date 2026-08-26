@@ -20,21 +20,25 @@ The tool accepts protein sequences as input and assigns probabilistic scores acr
 
 ## Repository Structure
 
-├── app/                # Web application code
+├── app.py/                # Web application code (Streamlit)
+├── cli.py/              # Command-line interface entry point
+├── core/               # Core prediction pipeline and utility functions
 ├── models/             # Trained ML models, selected features and thresholds
 ├── descriptors/        # Code to compute features
 ├── assets/             # contains logo image
 ├── requirements.txt    # Python dependencies
-└── README.md
-
+└── README.md           # Documentation
 ### Installaton:
     pip install -r requirements.txt
+    mamba create -n familie --file requirements.txt
 
 ## Usage
-
+GUI
 - Provide protein sequences via text input or FASTA upload
 - Select prediction mode (Screening or Validation)
 - View and download ranked predictons and class memberships as a .csv file
+CLI
+- run ./cli.py -h
 
 ## Intended Use
 This tool is intended for research and exploratory analysis of microprotein functions and is not designed for clinical or diagnostic use. 

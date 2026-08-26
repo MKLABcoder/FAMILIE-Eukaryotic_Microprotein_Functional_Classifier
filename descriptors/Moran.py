@@ -71,7 +71,8 @@ def Moran(fastas, props=['CIDH920105', 'BHAR880101', 'CHAM820101', 'CHAM820102',
 					# if key is '-', then the value is 0
 					fenzi = sum([(AAidx[prop][index.get(sequence[j], 0)] - xmean) * (AAidx[prop][index.get(sequence[j + n], 0)] - xmean) for j in range(len(sequence) - n)]) / (N - n)
 					fenmu = sum([(AAidx[prop][index.get(sequence[j], 0)] - xmean) ** 2 for j in range(len(sequence))]) / N
-					rn = fenzi / fenmu
+					# rn = fenzi / fenmu
+					rn = 0.0 if np.isclose(fenmu, 0.0) else fenzi / fenmu
 				else:
 					rn = 'NA'
 				code.append(rn)

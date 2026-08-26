@@ -3,6 +3,7 @@ import pandas as pd
 import joblib
 import json
 import os
+import re
 import io
 from Bio import SeqIO
 import plotly.express as px
@@ -11,6 +12,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
 sys.path.append(str(ROOT))
+
 
 
 from descriptors.AAC import AAC
@@ -54,6 +56,7 @@ MODEL_ROOT = "models"
 MAX_TEXT_SEQUENCES = 200
 MIN_LEN = 6
 MAX_LEN = 100
+CANONICAL_AA_PATTERN = re.compile(r"^[ACDEFGHIKLMNPQRSTVWY]+$", re.IGNORECASE)
 
 CLASS_ORDER = [
     "Immune", "Regulation", "Metabolism", "Secretory",
@@ -111,7 +114,7 @@ This tool predicts **functional classes of microproteins** using **sequence-deri
 - **Validation** mode for high confidence (stringent)
 
 **NOTE:**
-This tool is designed for microproteins with **canonical amino acids** and **sequence length between {MIN_LEN} and {MAX_LEN} amino acids.** Please ensure that uploaded sequences fall within this range.
+**This tool is designed for microproteins with canonical amino acids and sequence length between {MIN_LEN} and {MAX_LEN} amino acids.** Ensure that the uploaded sequences are within these limits.
 """
 )
 
@@ -178,13 +181,25 @@ fastas = []
 skipped = []   # list of dicts with id + sequence
 
 for sid, seq in raw_fastas:
-    L = len(seq)
-    if MIN_LEN <= L <= MAX_LEN:
+    seq_len = len(seq)
+    is_canonical = bool(CANONICAL_AA_PATTERN.match(seq))
+    is_valid_len = (MIN_LEN <= seq_len <= MAX_LEN)
+
+    if is_canonical and is_valid_len:
         fastas.append((sid, seq))
     else:
+        reasons = []
+        if not is_valid_len:
+            reasons.append(f"Length {seq_len} outside required range [{MIN_LEN}-{MAX_LEN}]")
+        if not is_canonical:
+            non_std = sorted(list(set(seq) - set("ACDEFGHIKLMNPQRSTVWY")))
+            reasons.append(f"Non-canonical amino acid(s) detected: {', '.join(non_std) if non_std else 'invalid characters'}")
+
         skipped.append({
             "Sequence_ID": sid,
             "Sequence": seq,
+            "Length": seq_len,
+            "Reason": " | ".join(reasons)
         })
 
 
@@ -317,8 +332,7 @@ if st.session_state.results is not None:
         skipped_df.insert(0, "S.No.", range(1, len(skipped_df) + 1))
 
         st.warning(
-            f"{len(skipped_df)} sequence(s) were skipped because their length was "
-            f"not between {MIN_LEN} and {MAX_LEN} amino acids."
+            f"{len(skipped_df)} sequence(s) were skipped."
         )
 
         with st.expander("View skipped sequences"):

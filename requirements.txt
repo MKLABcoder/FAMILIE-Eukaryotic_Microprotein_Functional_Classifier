@@ -1,9 +1,8 @@
 streamlit>=1.30
-pandas>=1.5
 numpy>=1.23
-scikit-learn>=1.2
-joblib
-biopython
-ifeature==0.0.6
+scikit-learn==1.7.2
+joblib>=1.5
+pandas>=2.0
+biopython>=1.85
 plotly
 tqdm
