@@ -1,6 +1,6 @@
 # FAMILIE - Functional Assignment of Microproteins Into Labels In Eukaryotes
 
-A production-ready machine learning–based web tool designed to predict the functional classes of microproteins using sequence-derived features.
+A production-ready machine learning–based web tool and command line interface designed to predict the functional classes of microproteins using sequence-derived features.
 The tool accepts protein sequences as input and assigns probabilistic scores across multiple functional categories, enabling both high-sensitivity screening and high-confidence validation use cases.
 
 ## Key Features
